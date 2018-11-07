@@ -8,11 +8,11 @@
 
 Υλικά που θα χρειαστούν:
 
-1.  Arduino UNO
+1. Arduino UNO
 2. Breadboard
 3. micro SD  Card Reader
 4. micro sd card
-5. LCD (16x2) οθνόνη
+5. LCD (16x2) οθόνη
 6. Αισθητήρας απόστασης (Ultrasonic Sensor HC-SR04 for Arduino)
 7. Αισθητήρας θερμοκρασίας (DHT11 Digital Humidity Temperature Sensor for Arduino) 
 8. καλώδια
