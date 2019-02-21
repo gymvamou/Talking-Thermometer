@@ -9,13 +9,13 @@
 Υλικά που θα χρειαστούν:
 
 1. Arduino UNO    7,50 €  
-2. Breadboard     5,00 €  
-3. micro SD  Card Reader  (Micro SD Storage Memory Board) 4,00 €  
-4. micro sd card   6,00 €  
-5. LCD (16x2) οθόνη  (I2C 16X2 Character LCD) 8,00 €
+2. Breadboard     4,00 €  
+3. micro SD  Card Reader  (Micro SD Storage Memory Board) 5,00 €  
+4. micro sd card   8,00 €  
+5. LCD (20x4) οθόνη  (I2C 20X4 Character LCD) 9,90 €
 6. Αισθητήρας απόστασης (Ultrasonic Sensor HC-SR04 for Arduino) 2,00 €
 7. Αισθητήρας θερμοκρασίας (DHT11 Digital Humidity Temperature Sensor for Arduino)  2,00 € 
-8. καλώδια  2,00 €  
+8. καλώδια  3,50 €  
 9. Υλικό για το εξωτερικό περίβλημα, το οποίο όμως δεν έχει καθοριστεί ακόμα.
 
-συνολικό κόστος περίπου από  36,00 €  έως  40,00 € 
+συνολικό κόστος περίπου 42,00 € 
