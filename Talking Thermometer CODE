@@ -1,0 +1,199 @@
+//Talking Thermometer - Gymnasio Vamou 2019
+#include <dht.h>
+#include <DHT.h>
+#include <SPI.h>
+#include <TMRpcm.h>
+#include <SD.h>
+#include "NewPing.h"
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+LiquidCrystal_I2C lcd(0x27,20 ,4); // set the LCD address to 0x3F for a 16 chars and 2 line display
+const int chipselect = 4;
+#define SD_ChipSelectPin 4
+#define DHT11_PIN 7
+#define ECHO_PIN 5 // Arduino pin tied to echo pin on the ultrasonic sensor.
+#define TRIGGER_PIN 6 // Arduino pin tied to trigger pin on the ultrasonic sensor.
+#define MAX_DISTANCE 500 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
+NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
+dht DHT;
+TMRpcm tmrpcm;
+         
+void setup() 
+{
+  lcd.init(); // initialize the lcd
+  lcd.backlight();
+  lcd.setCursor(0,0);
+  lcd.print("Talking  Thermometer");
+  lcd.setCursor(0,1);
+  lcd.print("   Gymnasio Vamou");
+  tmrpcm.speakerPin = 9;  
+  pinMode(9,OUTPUT);
+  Serial.begin(9600);
+  Serial.println("Talking Thermometer - Gymnasio Vamou");
+  if(!SD.begin(SD_ChipSelectPin))
+  {Serial.println("SD fail");
+  return;}
+}
+
+void loop() {
+  unsigned int uS = sonar.ping(); // Send ping, get ping time in microseconds (uS).
+  unsigned int cm = sonar.convert_cm(uS); // Convert into centimeters
+  int chk = DHT.read11(DHT11_PIN);
+  Serial.print("  Distance: ");
+  Serial.print(cm);
+  Serial.println(" cm ");
+  lcd.setCursor(0,0);
+  lcd.print("Talking  Thermometer");
+  lcd.setCursor(0,1);
+  lcd.print("   Gymnasio Vamou");
+  lcd.setCursor(0,2); 
+  lcd.print("Temperature: ");
+  lcd.print(DHT.temperature);
+  lcd.print((char)223);
+  lcd.print("C");
+  lcd.setCursor(3,3);
+  lcd.print("Humidity: ");
+  lcd.print(DHT.humidity);
+  lcd.print(" %");
+  delay(600);
+ 
+ if (cm < 40) {
+  tmrpcm.speakerPin = (HIGH);
+  if ((DHT.temperature) == 15) {
+  tmrpcm.setVolume(5);
+  tmrpcm.play("15.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Cool     ");
+  }
+  if ((DHT.temperature) == 16) {
+  tmrpcm.setVolume(5);
+  tmrpcm.play("16.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Cool     ");
+  }
+  if ((DHT.temperature) == 17) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("17.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Cool     ");
+  }
+  if ((DHT.temperature) == 18) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("18.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Cool    ");
+  }
+  if ((DHT.temperature) == 19) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("19.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Nice    ");
+  }
+  if ((DHT.temperature) == 20) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("20.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Nice    ");
+  }
+  if ((DHT.temperature) == 21) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("21.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Nice    ");
+  }
+  if ((DHT.temperature) == 22) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("22.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Nice    ");
+  }
+  if ((DHT.temperature) == 23) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("23.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Nice    ");
+  }
+  if ((DHT.temperature) == 24) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("24.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello It's Nice    ");
+  }
+  if ((DHT.temperature) == 25) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("25.wav");
+  lcd.setCursor(0,1);
+  lcd.print(" Hello It's Warm! ");
+ }
+  if ((DHT.temperature) == 26) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("26.wav");
+  lcd.setCursor(0,1);
+  lcd.print(" Hello It's Warm! ");
+  }
+  if ((DHT.temperature) == 27) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("27.wav");
+  lcd.setCursor(0,1);
+  lcd.print(" Hello It's Warm! ");
+  }
+  if ((DHT.temperature) == 28) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("28.wav");
+  lcd.setCursor(0,1);
+  lcd.print(" Hello It's Warm! ");
+ }
+  if ((DHT.temperature) == 29) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("29.wav");
+  lcd.setCursor(0,1);
+  lcd.print(" Hello It's Warm! ");
+  }
+  if ((DHT.temperature) == 30) {
+    tmrpcm.setVolume(5);
+  tmrpcm.play("30.wav");
+  lcd.setCursor(0,1);
+  lcd.print("  Hello Very Hot!     ");
+  }
+  if ((DHT.temperature) == 31) {
+    tmrpcm.setVolume(5);
+tmrpcm.play("31.wav");
+lcd.setCursor(0,1);
+  lcd.print("  Hello Very Hot!     ");
+  }
+  if ((DHT.temperature) == 32) {
+    tmrpcm.setVolume(5);
+tmrpcm.play("32.wav");
+lcd.setCursor(0,1);
+  lcd.print("  Hello Very Hot!     ");
+  }
+  if ((DHT.temperature) == 33) {
+    tmrpcm.setVolume(5);
+tmrpcm.play("33.wav");
+lcd.setCursor(0,1);
+  lcd.print("  Hello Very Hot!     ");
+  }
+  if ((DHT.temperature) == 34) {
+    tmrpcm.setVolume(5);
+tmrpcm.play("34.wav");
+lcd.setCursor(0,1);
+  lcd.print("  Hello Very Hot!     ");
+  }
+  if ((DHT.temperature) == 35) {
+    tmrpcm.setVolume(5);
+tmrpcm.play("35.wav");
+lcd.setCursor(0,1);
+  lcd.print("  Hello Very Hot!     ");
+  }
+  if ((DHT.temperature) == 36) {
+    tmrpcm.setVolume(5);
+tmrpcm.play("36.wav");
+lcd.setCursor(0,1);
+  lcd.print("  Hello Very Hot!     ");
+  }
+  delay(3000);
+  tmrpcm.stopPlayback();
+ }
+ if (cm > 40) {
+  tmrpcm.speakerPin = (LOW);}
+}
