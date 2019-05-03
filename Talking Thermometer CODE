@@ -1,22 +1,22 @@
-//Talking Thermometer - Gymnasio Vamou 2019
+//Talking Thermometer - Gymnasio Vamou 2019 New Version
 #include <dht.h>
 #include <DHT.h>
 #include <SPI.h>
 #include <TMRpcm.h>
 #include <SD.h>
-#include "NewPing.h"
 #include <Wire.h>
 #include <LiquidCrystal_I2C.h>
 LiquidCrystal_I2C lcd(0x27,20 ,4); // set the LCD address to 0x3F for a 16 chars and 2 line display
 const int chipselect = 4;
 #define SD_ChipSelectPin 4
 #define DHT11_PIN 7
-#define ECHO_PIN 5 // Arduino pin tied to echo pin on the ultrasonic sensor.
-#define TRIGGER_PIN 6 // Arduino pin tied to trigger pin on the ultrasonic sensor.
-#define MAX_DISTANCE 500 // Maximum distance we want to ping for (in centimeters). Maximum sensor distance is rated at 400-500cm.
-NewPing sonar(TRIGGER_PIN, ECHO_PIN, MAX_DISTANCE); // NewPing setup of pins and maximum distance.
 dht DHT;
 TMRpcm tmrpcm;
+int echoPin = 5; // Echo Pin
+int trigPin = 6; // Trigger Pin
+int maximumRange = 300; // Maximum range needed
+int minimumRange = 0; // Minimum range needed
+long duration, distance; // Duration used to calculate distance
          
 void setup() 
 {
@@ -28,6 +28,8 @@ void setup()
   lcd.print("   Gymnasio Vamou");
   tmrpcm.speakerPin = 9;  
   pinMode(9,OUTPUT);
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
   Serial.begin(9600);
   Serial.println("Talking Thermometer - Gymnasio Vamou");
   if(!SD.begin(SD_ChipSelectPin))
@@ -36,11 +38,18 @@ void setup()
 }
 
 void loop() {
-  unsigned int uS = sonar.ping(); // Send ping, get ping time in microseconds (uS).
-  unsigned int cm = sonar.convert_cm(uS); // Convert into centimeters
+    digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+  duration = pulseIn(echoPin, HIGH);
+  distance = duration/58.2; //Υπολογισμός απόστασης (σε cm) βασιζόμενοι στην ταχύτητα του ήχου.
+  delay(50); //Καθυστέρηση 50ms πριν την επόμενη ανάγνωση
+
   int chk = DHT.read11(DHT11_PIN);
   Serial.print("  Distance: ");
-  Serial.print(cm);
+  Serial.print(distance);
   Serial.println(" cm ");
   lcd.setCursor(0,0);
   lcd.print("Talking  Thermometer");
@@ -57,7 +66,7 @@ void loop() {
   lcd.print(" %");
   delay(600);
  
- if (cm < 40) {
+ if (distance < 40) {
   tmrpcm.speakerPin = (HIGH);
   if ((DHT.temperature) == 15) {
   tmrpcm.setVolume(5);
@@ -194,6 +203,6 @@ lcd.setCursor(0,1);
   delay(3000);
   tmrpcm.stopPlayback();
  }
- if (cm > 40) {
-  tmrpcm.speakerPin = (LOW);}
+ if (distance > 40) {
+tmrpcm.speakerPin = (LOW);}
 }
